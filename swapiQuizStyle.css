@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	background-color: teal;
+	align-items: center;
+}
+
+h1 {
+	color: orange;
+}
+
+h2 {
+	visibility: hidden;
+}
+
+.characterDetails {
+	border: 2px solid orange;
+	border-radius: 5px;
+	background-color: white;
+	width: 20rem;
+	height: auto;
+	padding: 2rem;
+	color: orange;
+}
+
