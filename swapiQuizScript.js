@@ -1,6 +1,7 @@
 /*let randomNumber = Math.floor((Math.random() * 88) * 1)
 let apiUrl = 'https://swapi.co/api/people/' + randomNumber*/
-let apiUrl = 'https://swapi.co/api/people/1/'
+
+let apiUrl = 'https://swapi.co/api/people/1/' //using this for testing
 
 let name = document.querySelector('#characterName');
 let gender = document.querySelector('#gender');
@@ -12,6 +13,7 @@ let films = document.querySelector('#films');
 let showAnswer = document.querySelector('#showAnswerButton');
 
 let starshipUrls;
+
 
 fetch(apiUrl).then(response => {
   return response.json();
@@ -44,20 +46,24 @@ fetch(apiUrl).then(response => {
 		species.innerText = "Species Not Found"
 	})
 	
-	//Promise.all(starshipUrls.map(url =>  //works for one ship & mulit when starshipUrls hardcoded, but not `{}`
-	Promise.all(starshipUrls.slice(url =>  //no errors, but returns undefined with starshipUrls `{}`	  
-	    fetch(url).then(name => name.json(), 
-	    	console.log('fetch at line 50')) //get's logged only when starshipUrls is hardcoded
-	)).then(array => {
-	    for (var i=0; i<starshipUrls.length; i++) {
-	    	let para = document.createElement('p');
-	    	let ship = document.createTextNode(`${array[i].name}, `)
-	    	para.appendChild(ship);
-	    	var element = document.getElementById('starship');
-	    	element.appendChild(ship);				}
-	  }).catch(err => {
-		starship.innerText = 'Starship Not Found'
-	})
+	async function showStarships() {
+		await new Promise((resolve, reject) => setTimeout(resolve, 3000));
+		//Promise.all(starshipUrls.map(url =>  //works for one ship & mulit when starshipUrls hardcoded, but not `{}`
+		Promise.all(starshipUrls.slice(url =>  //no errors, but returns undefined with starshipUrls `{}`	  
+		    fetch(url).then(name => name.json(), 
+		    	console.log('fetch at line 50')) //get's logged only when starshipUrls is hardcoded
+		)).then(array => {
+		    for (var i=0; i<starshipUrls.length; i++) {
+		    	let para = document.createElement('p');
+		    	let ship = document.createTextNode(`${array[i].name}, `)
+		    	para.appendChild(ship);
+		    	var element = document.getElementById('starship');
+		    	element.appendChild(ship);				}
+		  }).catch(err => {
+			starship.innerText = 'Starship Not Found'
+		})
+	}/*async bracket*/
+	showStarships()
 
 }).catch(err => {
  	name.innerText = "Something went wrong. Please, refresh."
