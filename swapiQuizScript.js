@@ -11,23 +11,22 @@ let starship = document.querySelector('#starship');
 let films = document.querySelector('#films');
 let showAnswer = document.querySelector('#showAnswerButton');
 
-let starshipUrl;
+let starshipUrls;
 
 fetch(apiUrl).then(response => {
   return response.json();
 }).then(data => {	
+	console.log("data at line 18")
 	name.innerText = data.name;
 	gender.innerText = `Gender:  ${data.gender}`
 	hairColor.innerText = `Hair Color:  ${data.hair_color}`
 	let planetUrl = `${data.homeworld}`
 	let speciesUrl = `${data.species}`
-	let starshipUrls = `${data.starships}` 
-	/*let starshipUrls = [
+	let starshipUrls = [`${data.starships}`]
+	/*let starshipUrls = [  //-works
         "https://swapi.co/api/starships/12/", 
         "https://swapi.co/api/starships/22/"
     ]*/
-//let starshipUrl = "https://swapi.co/api/starships/12/" - works without no-cors
-
 
 	fetch(planetUrl).then(response => {
 	return response.json();
@@ -44,41 +43,22 @@ fetch(apiUrl).then(response => {
 	}).catch(err => {
 		species.innerText = "Species Not Found"
 	})
-
 	
-	Promise.all(starshipUrls.map(url =>  //works for one ship
-	    fetch(url).then(name => name.json())
-	))
-	  .then(array => {
-	    //starship.innerText = 'Starship(s): ' + array[0].name + ', ' + array[1].name
-	   
+	//Promise.all(starshipUrls.map(url =>  //works for one ship & mulit when starshipUrls hardcoded, but not `{}`
+	Promise.all(starshipUrls.slice(url =>  //no errors, but returns undefined with starshipUrls `{}`	  
+	    fetch(url).then(name => name.json(), 
+	    	console.log('fetch at line 50')) //get's logged only when starshipUrls is hardcoded
+	)).then(array => {
 	    for (var i=0; i<starshipUrls.length; i++) {
 	    	let para = document.createElement('p');
 	    	let ship = document.createTextNode(`${array[i].name}, `)
 	    	para.appendChild(ship);
 	    	var element = document.getElementById('starship');
-	    	element.appendChild(ship);
-			//starship.innerText = `Starship(s):  ${array[i].name}`  -works, but only shows last index
-		}
-
+	    	element.appendChild(ship);				}
 	  }).catch(err => {
 		starship.innerText = 'Starship Not Found'
 	})
 
-	/*fetch(starshipUrls, {
-		mode: 'no-cors'
-	}).then(response => {
-		return response.json();
-	}).then(data => {
-		let starshipArray = [`${data.name}`]
-		
-		//starship.innerText = `Starship: ${data.name}`
-		starship.innerText = `Starship: ${data.name}`
-		
-	}).catch(err => {
-		starship.innerText = 'Starship Not Found'
-	})*/
-	
 }).catch(err => {
  	name.innerText = "Something went wrong. Please, refresh."
 });	
@@ -86,19 +66,6 @@ fetch(apiUrl).then(response => {
 showAnswer.addEventListener("click", displayName);
 
 function displayName() {
-	name.style.visibility = "visible";
+	name.style.visibility = "visible";	
 }
 
-/*fetch(starshipUrl).then(response => {
-		return response.json();
-	}).then(data => {
-		let starshipsArray = [`${data.name}`]
-		for (var i=0; i<arr.length; i++) {
-			starship.innerText = `Starship:  ${starshipsArray}`
-		}
-		
-	}).catch(err => {
-		starship.innerText = 'Starship Not Found'
-	})
-
-*/

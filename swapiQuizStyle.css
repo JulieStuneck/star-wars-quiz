@@ -5,25 +5,55 @@
 body {
 	display: flex;
 	flex-direction: column;
-	background-color: teal;
+	background-image: url("space.jpg");
 	align-items: center;
 }
 
 h1 {
 	color: orange;
+	font-family: 'Exo', sans-serif;
+	font-size: 4em;
 }
 
 h2 {
 	visibility: hidden;
+	/*color: orange;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 1.25em;*/
+}
+
+h3 {
+	color: white;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 1.25em;
+	font-style: italic;
 }
 
 .characterDetails {
 	border: 2px solid orange;
 	border-radius: 5px;
-	background-color: white;
+	background-color: #fff6e6;
 	width: 20rem;
 	height: auto;
 	padding: 2rem;
 	color: orange;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 1.25em;
+}
+
+#characterName {
+	color: #ffb833;
+	font-family: 'Exo', sans-serif;
+	font-size: 2em;
+}
+
+#showAnswerButton {
+	margin-top: 1rem;
+	padding: .5em;
+	border-radius: 12px;
+	background-color: #fff6e6;
+	color: orange;
+	font-family: 'PT Sans', sans-serif;
+	border: 2px solid orange;
 }
 
