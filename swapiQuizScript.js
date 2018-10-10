@@ -18,7 +18,7 @@ let starshipUrls;
 fetch(apiUrl).then(response => {
   return response.json();
 }).then(data => {	
-	console.log("data at line 18")
+	console.log("data at line 18") //for testing
 	name.innerText = data.name;
 	gender.innerText = `Gender:  ${data.gender}`
 	hairColor.innerText = `Hair Color:  ${data.hair_color}`
@@ -51,7 +51,7 @@ fetch(apiUrl).then(response => {
 		//Promise.all(starshipUrls.map(url =>  //works for one ship & mulit when starshipUrls hardcoded, but not `{}`
 		Promise.all(starshipUrls.slice(url =>  //no errors, but returns undefined with starshipUrls `{}`	  
 		    fetch(url).then(name => name.json(), 
-		    	console.log('fetch at line 50')) //get's logged only when starshipUrls is hardcoded
+		    	console.log('fetch at line 50')) //for testing - get's logged only when starshipUrls is hardcoded
 		)).then(array => {
 		    for (var i=0; i<starshipUrls.length; i++) {
 		    	let para = document.createElement('p');
