@@ -49,11 +49,12 @@ h3 {
 
 #showAnswerButton {
 	margin-top: 1rem;
-	padding: .5em;
+	padding: .25em 1.5em ;
 	border-radius: 12px;
-	background-color: #fff6e6;
-	color: orange;
+	background-color: #ffc966;
+	color: white;
 	font-family: 'PT Sans', sans-serif;
+	font-style: italic;
 	border: 2px solid orange;
 }
 
