@@ -15,18 +15,11 @@ h1 {
 	font-size: 4em;
 }
 
-h2 {
-	visibility: hidden;
-	/*color: orange;
-	font-family: 'PT Sans', sans-serif;
-	font-size: 1.25em;*/
-}
-
-h3 {
+#instructions {
 	color: white;
-	font-family: 'PT Sans', sans-serif;
+	font-family: /*'PT Sans',*/ sans-serif;
 	font-size: 1.25em;
-	font-style: italic;
+	font-style: italic;	
 }
 
 .characterDetails {
@@ -37,7 +30,7 @@ h3 {
 	height: auto;
 	padding: 2rem;
 	color: orange;
-	font-family: 'PT Sans', sans-serif;
+	font-family: /*'PT Sans',*/ sans-serif;
 	font-size: 1.25em;
 }
 
@@ -45,6 +38,7 @@ h3 {
 	color: #ffb833;
 	font-family: 'Exo', sans-serif;
 	font-size: 2em;
+	visibility: hidden;
 }
 
 #showAnswerButton {

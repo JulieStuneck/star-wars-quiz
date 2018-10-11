@@ -1,9 +1,10 @@
-/*let randomNumber = Math.floor((Math.random() * 88) * 1)
-let apiUrl = 'https://swapi.co/api/people/' + randomNumber*/
+let randomNumber = Math.floor((Math.random() * 88) * 1)
+let apiUrl = 'https://swapi.co/api/people/' + randomNumber
 
-let apiUrl = 'https://swapi.co/api/people/1/' //using this for testing
+//let apiUrl = 'https://swapi.co/api/people/1/' //using this for testing
 
 let name = document.querySelector('#characterName');
+let instructions = document.querySelector('#instructions');
 let gender = document.querySelector('#gender');
 let hairColor = document.querySelector('#hair-color');
 let homeworld = document.querySelector('#homeworld');
@@ -12,60 +13,84 @@ let starship = document.querySelector('#starship');
 let films = document.querySelector('#films');
 let showAnswer = document.querySelector('#showAnswerButton');
 
-let starshipUrls;
-
-
 fetch(apiUrl).then(response => {
   return response.json();
 }).then(data => {	
-	console.log("data at line 18") //for testing
 	name.innerText = data.name;
 	gender.innerText = `Gender:  ${data.gender}`
 	hairColor.innerText = `Hair Color:  ${data.hair_color}`
 	let planetUrl = `${data.homeworld}`
 	let speciesUrl = `${data.species}`
-	let starshipUrls = [`${data.starships}`]
-	/*let starshipUrls = [  //-works
-        "https://swapi.co/api/starships/12/", 
-        "https://swapi.co/api/starships/22/"
-    ]*/
-
+	let starshipUrls = data.starships
+	let filmUrls = data.films;
+	
 	fetch(planetUrl).then(response => {
-	return response.json();
-	}).then(data => {
-		homeworld.innerText = `Home World: ${data.name}`
-	}).catch(err => {
-		homeworld.innerText = "Home World Not Found"
+			return response.json();
+		}).then(data => {
+			homeworld.innerText = `Home World: ${data.name}`
+		}).catch(err => {
+			homeworld.innerText = "Home World Not Found"
 	})
 
 	fetch(speciesUrl).then(response => {
-		return response.json();		
-	}).then(data => {
-		species.innerText = `Species:  ${data.name}`
-	}).catch(err => {
-		species.innerText = "Species Not Found"
+			return response.json();		
+		}).then(data => {
+			species.innerText = `Species:  ${data.name}`
+		}).catch(err => {
+			species.innerText = "Species Not Found"
 	})
-	
-	async function showStarships() {
-		await new Promise((resolve, reject) => setTimeout(resolve, 3000));
-		//Promise.all(starshipUrls.map(url =>  //works for one ship & mulit when starshipUrls hardcoded, but not `{}`
-		Promise.all(starshipUrls.slice(url =>  //no errors, but returns undefined with starshipUrls `{}`	  
-		    fetch(url).then(name => name.json(), 
-		    	console.log('fetch at line 50')) //for testing - get's logged only when starshipUrls is hardcoded
-		)).then(array => {
-		    for (var i=0; i<starshipUrls.length; i++) {
-		    	let para = document.createElement('p');
-		    	let ship = document.createTextNode(`${array[i].name}, `)
-		    	para.appendChild(ship);
-		    	var element = document.getElementById('starship');
-		    	element.appendChild(ship);				}
-		  }).catch(err => {
-			starship.innerText = 'Starship Not Found'
-		})
-	}/*async bracket*/
-	showStarships()
 
-}).catch(err => {
+	let shipRequests = starshipUrls.map(url => fetch(url));
+	Promise.all(shipRequests)
+  		.then(responses => {
+			// Unordered list for ships
+			const shipsUl = document.createElement('ul')
+
+			// Individual starship list items
+			responses.forEach(response => {
+				const shipLi = document.createElement('li')
+				shipLi.textContent = response.url
+
+				fetch(response.url).then(starshipResponse => {
+					starshipResponse.json().then(starship => {
+						shipLi.textContent = starship.name
+					})
+				}).catch(err => {
+					starship.innerText = 'Starship Not Found'
+				})
+
+				shipsUl.appendChild(shipLi);
+			});
+
+			// Plug ship list into starship paragraph
+			const shipsP = document.getElementById('starship');
+			shipsP.appendChild(shipsUl);
+		});
+
+	let filmRequests = filmUrls.map(filmUrl => fetch(filmUrl));
+	Promise.all(filmRequests)
+		.then(responses2 => {
+			const filmsUl = document.createElement('ul')
+			responses2.forEach(response2 => {
+				const filmLi = document.createElement('li')
+				filmLi.textContent = response2.url
+
+			fetch(response2.url).then(filmResponse => {
+				filmResponse.json().then(films => {
+					filmLi.textContent = films.title
+				})
+			}).catch(err => {
+				films.innerText = 'Film Not Found'
+			})
+				filmsUl.appendChild(filmLi);
+			})
+
+			const filmsP = document.getElementById('films');
+			filmsP.appendChild(filmsUl);
+		})
+	
+	
+	}).catch(err => {
  	name.innerText = "Something went wrong. Please, refresh."
 });	
 
@@ -73,5 +98,21 @@ showAnswer.addEventListener("click", displayName);
 
 function displayName() {
 	name.style.visibility = "visible";	
+	instructions.style.visibility = "hidden";
 }
+
+
+//no ul version:
+	/*Promise.all(starshipUrls.map(url =>  
+	    fetch(url).then(name => name.json(), 
+	   ))).then(array => {
+	    for (var i=0; i<starshipUrls.length; i++) {
+	    	let para = document.createElement('p');
+	    	let ship = document.createTextNode(`${array[i].name}, `)
+	    	para.appendChild(ship);
+	    	var element = document.getElementById('starship');
+	    	element.appendChild(ship);				}
+	  }).catch(err => {
+		starship.innerText = 'Starship Not Found'
+	})*/
 
