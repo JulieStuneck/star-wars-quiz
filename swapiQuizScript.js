@@ -12,6 +12,7 @@ let species = document.querySelector('#species');
 let starship = document.querySelector('#starship');
 let films = document.querySelector('#films');
 let showAnswer = document.querySelector('#showAnswerButton');
+let refresh = document.querySelector('#tryAgainButton');
 
 fetch(apiUrl).then(response => {
   return response.json();
@@ -94,12 +95,20 @@ fetch(apiUrl).then(response => {
  	name.innerText = "Something went wrong. Please, refresh."
 });	
 
-showAnswer.addEventListener("click", displayName);
+
 
 function displayName() {
 	name.style.visibility = "visible";	
 	instructions.style.visibility = "hidden";
 }
+
+function restart() {
+	let refreshUrl = './swapiQuizIndex.html';
+	window.location.reload() = window.location.refreshUrl;
+}
+
+showAnswer.addEventListener("click", displayName);
+refresh.addEventListener("click", restart);
 
 
 //no ul version:
