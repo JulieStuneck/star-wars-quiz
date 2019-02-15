@@ -123,5 +123,5 @@ refresh.addEventListener("click", restart);
 	    	element.appendChild(ship);				}
 	  }).catch(err => {
 		starship.innerText = 'Starship Not Found'
-	})*/
-
+	})
+	*/
