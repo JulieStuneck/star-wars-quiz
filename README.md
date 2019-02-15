@@ -1,0 +1,1 @@
+Players are given clues about Star Wars characters. Take a guess as to who you think it is and then click the Show Answer button to see if you were right. Then click to play again.
